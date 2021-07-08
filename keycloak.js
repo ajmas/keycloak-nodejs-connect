@@ -340,6 +340,9 @@ Keycloak.prototype.storeGrant = function (grant, request, response) {
     return;
   }
   if (!grant) {
+    if (process.env.KEYCLOAK_CONNECT_DEBUG === '1') {
+      console.log('No grant was provided');
+    }
     this.accessDenied(request, response);
     return;
   }

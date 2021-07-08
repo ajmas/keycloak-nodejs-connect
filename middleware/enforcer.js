@@ -133,8 +133,14 @@ Enforcer.prototype.enforce = function enforce (expectedPermissions) {
           return next();
         }
 
+        if (process.env.KEYCLOAK_CONNECT_DEBUG === '1') {
+          console.log('Keycloak (response_mode: permissions)- insufficient permissions');
+        }
         return keycloak.accessDenied(request, response, next);
-      }).catch(function () {
+      }).catch(function (err) {
+        if (process.env.KEYCLOAK_CONNECT_DEBUG === '1') {
+          console.log('Keycloak  (response_mode: permissions) - permissions error', err);
+        }
         return keycloak.accessDenied(request, response, next);
       });
     } else if (config.response_mode === 'token') {
@@ -148,8 +154,14 @@ Enforcer.prototype.enforce = function enforce (expectedPermissions) {
           return next();
         }
 
+        if (process.env.KEYCLOAK_CONNECT_DEBUG === '1') {
+          console.log('Keycloak (response_mode: token) - access denied');
+        }
         return keycloak.accessDenied(request, response, next);
-      }).catch(function () {
+      }).catch(function (error) {
+        if (process.env.KEYCLOAK_CONNECT_DEBUG === '1') {
+          console.log('Keycloak (response_mode: token) - permissions error', err);
+        }
         return keycloak.accessDenied(request, response, next);
       });
     }
