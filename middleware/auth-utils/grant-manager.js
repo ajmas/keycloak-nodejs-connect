@@ -381,6 +381,10 @@ GrantManager.prototype.validateGrant = function validateGrant (grant) {
         grant[tokenName] = token;
         resolve();
       }).catch((err) => {
+        if (process.env.KEYCLOAK_CONNECT_DEBUG === '1') {
+          console.log('Grant validation failed. Reason: ' + err.message);
+          console.log('Error detail', error);
+        }
         reject(new Error('Grant validation failed. Reason: ' + err.message));
       });
     });
