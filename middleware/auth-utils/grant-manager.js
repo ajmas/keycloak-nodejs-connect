@@ -383,7 +383,7 @@ GrantManager.prototype.validateGrant = function validateGrant (grant) {
       }).catch((err) => {
         if (process.env.KEYCLOAK_CONNECT_DEBUG === '1') {
           console.log('Grant validation failed. Reason: ' + err.message);
-          console.log('Error detail', error);
+          console.log('Error detail', err);
         }
         reject(new Error('Grant validation failed. Reason: ' + err.message));
       });
